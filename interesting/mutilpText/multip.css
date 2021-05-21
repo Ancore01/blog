@@ -1,0 +1,27 @@
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: aquamarine;
+}
+.text {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  width: 40vw;
+  height: 100px;
+  background-color: blanchedalmond;
+  overflow: hidden;
+}
+
+.btn {
+  float: right;
+  clear: both;
+}
+.text::before {
+  content: "";
+  float: right;
+  height: calc(100%-21px);
+  background-color: red;
+}

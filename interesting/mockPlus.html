@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      body {
+        background-color: lightsteelblue;
+        display: flex;
+        flex-direction: column;
+      }
+
+      div {
+        background-color: moccasin;
+        border: solid 1px rgb(36, 37, 37);
+        height: 45vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 4px;
+      }
+      button {
+        width: 150px;
+        height: 70px;
+        border-style: double;
+        border-radius: 20px;
+        border-width: 5px;
+        background-image: radial-gradient(
+          circle,
+          rgb(167, 174, 180) 90%,
+          rgb(36, 37, 37)
+        );
+        font-weight: bold;
+      }
+      button::after,
+      button::before {
+        content: "★";
+        position: absolute;
+        font-size: 24px;
+        margin-top: -10px;
+      }
+      button::before {
+        margin-left: -24px;
+      }
+      button::after {
+        margin-left: 6px;
+      }
+      #pullable-box {
+        position: relative;
+        overflow: hidden;
+      }
+      #box {
+        width: 150px;
+        height: 150px;
+        border: 1px solid gray;
+        position: absolute;
+      }
+      input {
+        position: absolute;
+      }
+      input:nth-child(1) {
+        top: 0px;
+        left: 0px;
+        transform: translate(-50%, -50%);
+      }
+      input:nth-child(2) {
+        top: 0px;
+        right: 0px;
+        transform: translate(50%, -50%);
+      }
+      input:nth-child(3) {
+        bottom: 0px;
+        left: 0px;
+        transform: translate(-50%, 50%);
+      }
+      input:nth-child(4) {
+        bottom: 0px;
+        right: 0px;
+        transform: translate(50%, 50%);
+      }
+    </style>
+  </head>
+  <body>
+    <div id="btn">
+      <button>CHECKOUT</button>
+    </div>
+    <div id="pullable-box">
+      <div id="box">
+        <input type="checkbox" />
+        <input type="checkbox" />
+        <input type="checkbox" />
+        <input type="checkbox" />
+      </div>
+    </div>
+  </body>
+  <script>
+    let box = document.querySelector("#box");
+    let inputs = document.getElementsByTagName("input");
+    let container = document.querySelector("#pullable-box");
+    for (let i = 0; i < inputs.length; i++) {
+      inputs[i].onmousedown = function (e) {
+        e.stopPropagation();
+        document.onmousemove = function (eve) {
+          let distanceX = e.clientX - box.offsetLeft;
+          let distanceY = e.clientY - (container.offsetTop + box.offsetTop);
+
+          //计算box的宽高
+          if (i == 0 || i == 2) {
+            X = inputs[3].offsetLeft + box.offsetLeft - eve.clientX;
+          } else if (i == 1 || i == 3) {
+            X = eve.clientX - (inputs[2].offsetLeft + box.offsetLeft);
+          }
+          let boxStyle = document.defaultView.getComputedStyle(box, null)[
+            "width"
+          ];
+          let width = Number(boxStyle.slice(0, boxStyle.indexOf("p")));
+
+          if (width > 20 && width <= container.offsetHeight) {
+            box.style.width = X + "px";
+            box.style.height = X + "px";
+          }
+          box.style.transition = ".5s";
+        };
+      };
+      document.onmouseup = function (eve) {
+        document.onmousemove = null;
+      };
+    }
+    box.onmousedown = function (e) {
+      let self = this;
+      let diffX = self.offsetWidth - (e.clientX - self.offsetLeft);
+      let diffY =
+        self.offsetHeight - (e.clientY - self.offsetTop - container.offsetTop);
+      document.onmousemove = function (eve) {
+        let top = eve.clientY - container.offsetTop;
+        //offsetLeft理解不对
+        let left = eve.clientX - container.offsetLeft;
+        if (top < 0) {
+          top = 0;
+        } else if (top + diffY >= container.offsetHeight) {
+          top = container.offsetHeight - self.offsetHeight;
+        }
+        if (left < 0) {
+          left = 0;
+        } else if (left + diffX >= container.offsetWidth) {
+          left = container.offsetWidth - self.offsetWidth;
+        }
+        self.style.top = top + "px";
+        self.style.left = left + "px";
+      };
+
+      document.onmouseup = function (e) {
+        document.onmousemove = null;
+      };
+    };
+  </script>
+</html>

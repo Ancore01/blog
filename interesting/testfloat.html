@@ -1,0 +1,40 @@
+<style>
+  div {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: lightblue;
+  }
+  li {
+    width: 100px;
+    height: 100px;
+    float: left;
+    list-style: none;
+    clear: both;
+  }
+  .style {
+    width: 70px;
+    height: 70px;
+    background-color: greenyellow;
+  }
+</style>
+<div>
+  <ul>
+    <li style="background-color: antiquewhite"></li>
+    <li style="background-color: aqua"></li>
+    <li style="background-color: azure"></li>
+    <li style="background-color: lightsalmon"></li>
+  </ul>
+  <div class="style"></div>
+</div>
+<script>
+  let styleTest = document.querySelector(".style");
+  styleTest.onclick = function (e) {
+    let width = document.defaultView.getComputedStyle(this, null)["width"];
+    console.log(width);
+    let backgroundColor = this.style.backgroundColor;
+    console.log(backgroundColor);
+  };
+</script>
