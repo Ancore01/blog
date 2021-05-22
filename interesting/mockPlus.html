@@ -8,7 +8,7 @@
         flex-direction: column;
       }
 
-      div {
+      div:not(.star) {
         background-color: moccasin;
         border: solid 1px rgb(36, 37, 37);
         height: 45vh;
@@ -76,11 +76,67 @@
         right: 0px;
         transform: translate(50%, 50%);
       }
+
+      #btn-outter {
+        background-color: rgb(194, 193, 193);
+        width: 160px;
+        height: 60px;
+        border: solid 1px rgb(143, 142, 142);
+        margin-left: 60px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+      }
+      #btn-inner {
+        background-color: rgb(212, 209, 209);
+        width: 140px;
+        height: 40px;
+        border: solid 1px rgb(143, 142, 142);
+        border-radius: 10px;
+        margin-top: 4px;
+      }
+      .star {
+        border-color: #7d7d7d transparent transparent transparent;
+        border-style: solid;
+        border-top-width: 5.773px;
+        border-right-width: 10px;
+        border-left-width: 10px;
+        position: relative;
+        height: 0px;
+        width: 0px;
+      }
+      .star::before,
+      .star::after {
+        border-color: #7d7d7d transparent transparent transparent;
+        border-style: solid;
+        border-top-width: 5.77px;
+        border-right-width: 10px;
+        border-left-width: 10px;
+        position: absolute;
+        height: 0px;
+        width: 0px;
+        content: "";
+        margin-top: -5.5px;
+        margin-left: -10px;
+      }
+      .star::before {
+        transform: rotate(60deg);
+      }
+      .star::after {
+        transform: rotate(-60deg);
+      }
     </style>
   </head>
   <body>
     <div id="btn">
       <button>CHECKOUT</button>
+      <div id="btn-outter">
+        <div id="btn-inner">
+          <div class="star"></div>
+          CHECKOUT
+          <div class="star"></div>
+        </div>
+      </div>
     </div>
     <div id="pullable-box">
       <div id="box">
